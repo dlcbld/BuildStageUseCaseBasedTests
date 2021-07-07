@@ -12,6 +12,14 @@ env:
 
 steps:
   - type: Command
-    name: "Sleep"
+    name: "pre-build"
     command: |
-      echo "Hello build stage default"
+      echo "build is starting"
+  - type: Command
+    name: "build"
+    command: |
+      mvn clean install
+  - type: Command
+    name: "post-build"
+    command: |
+      java -jar target/my-app-1.0-SNAPSHOT.jar
