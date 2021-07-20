@@ -23,3 +23,7 @@ steps:
     name: "post-build"
     command: |
       java -jar target/my-app-1.0-SNAPSHOT.jar
+outputArtifacts:
+- name: my-app-1.0-SNAPSHOT.jar
+  type: BINARY
+  location: target/my-app-1.0-SNAPSHOT.jar
