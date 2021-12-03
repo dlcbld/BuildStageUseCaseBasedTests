@@ -1,0 +1,46 @@
+version: 0.1
+component: build
+timeoutInSeconds: 6000
+runAs: root
+shell: bash
+env:
+  variables:
+    "testEnv" : "testVariable"
+  exportedVariables:
+    - VERS
+    - param1
+    - CONTENTS_ARTIFACT_BY_ID
+    - CONTENTS_ARTIFACT_BY_PATH
+
+inputArtifacts:
+  - name: generic-artifact-by-id
+    type: GENERIC_ARTIFACT
+    artifactId: ${ARTIFACT_ID}
+    location: artifactById.txt
+  - name: generic-artifact-by-path
+    type: GENERIC_ARTIFACT
+    registryId: ${REGISTRY_ID}
+    path: ${ARTIFACT_PATH}
+    version: ${ARTIFACT_VERSION}
+    location: ${ARTIFACT_DOWNLOAD_PATH} ## Send as 'artifactByPath.txt' till outputArtifacts supports parameterized location
+
+steps:
+  - type: Command
+    name: "Maven build step"
+    command: |
+      echo "Hello build stage"
+      mvn clean install
+  - type: Command
+    name: "Export artifact contents"
+    command: |
+      cat artifactById.txt && export CONTENTS_ARTIFACT_BY_ID=`cat artifactById.txt`
+      cat ${ARTIFACT_DOWNLOAD_PATH} && export CONTENTS_ARTIFACT_BY_PATH=`cat ${ARTIFACT_DOWNLOAD_PATH}`
+
+outputArtifacts:
+  - name: FILE_ARTIFACT_BY_ID
+    type: BINARY
+    location: artifactById.txt
+  - name: FILE_ARTIFACT_BY_PATH
+    type: BINARY
+    location: artifactByPath.txt
+      
