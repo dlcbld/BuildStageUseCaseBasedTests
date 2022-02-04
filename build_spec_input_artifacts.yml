@@ -15,14 +15,14 @@ env:
 inputArtifacts:
   - name: generic-artifact-by-id
     type: GENERIC_ARTIFACT
-    artifactId: ${ARTIFACT_ID}
-    location: artifactById.txt
+    artifactId: ${ARTIFACT_ID} ## Ex: ocid1.genericartifact.oc1.iad.0.amaaaaaajethd5aal242ohxcokvdfdmrjp3oavmlrqgik5mh5xsstjq5v7ka
+    location: file.exe
   - name: generic-artifact-by-path
     type: GENERIC_ARTIFACT
-    registryId: ${REGISTRY_ID}
-    path: ${ARTIFACT_PATH}
+    registryId: ocid1.artifactrepository.oc1.iad.0.amaaaaaajethd5aapye7qhostprgldy5meh4qdl34zoghjiy7pc5ife2rsfa
+    path: internal-lib.jar
     version: ${ARTIFACT_VERSION}
-    location: ${ARTIFACT_DOWNLOAD_PATH} ## Send as 'artifactByPath.txt' till outputArtifacts supports parameterized location
+    location: ${OCI_WORKSPACE_DIR}/libs/internal-lib.jar
 
 steps:
   - type: Command
